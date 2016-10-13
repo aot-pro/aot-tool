@@ -17,20 +17,14 @@
 
 package aot.tool;
 
-import java.util.Arrays;
-
 /**
  * @author Dmitry Kotlyarov
  * @since 1.0
  */
-public final class Main {
-    public static void main(String[] args) {
-        try {
-            Command c = (Command) Class.forName(String.format("aot.tool.%s.CustomCommand", args[0])).getConstructor(String[].class).newInstance(new Object[] {Arrays.copyOfRange(args, 1, args.length)});
-            c.run();
-        } catch (Throwable e) {
-            System.out.println(e.toString());
-            System.exit(1);
-        }
+public abstract class Command implements Runnable {
+    protected final String[] args;
+
+    protected Command(String[] args) {
+        this.args = args;
     }
 }
