@@ -18,6 +18,12 @@
 package aot.tool.ui;
 
 import aot.tool.Command;
+import org.eclipse.swt.SWT;
+import org.eclipse.swt.graphics.Point;
+import org.eclipse.swt.graphics.Rectangle;
+import org.eclipse.swt.layout.FillLayout;
+import org.eclipse.swt.widgets.Display;
+import org.eclipse.swt.widgets.Shell;
 
 /**
  * @author Dmitry Kotlyarov
@@ -30,5 +36,18 @@ public class CustomCommand extends Command {
 
     @Override
     public void run() {
+        Display display = new Display();
+        Shell shell = new Shell(display, SWT.SHELL_TRIM);
+        shell.setLayout(new FillLayout());
+        shell.setText("AuditOfThings CLI & UI tool");
+        Rectangle monitorArea = shell.getMonitor().getClientArea();
+        shell.setSize(monitorArea.width, monitorArea.height);
+        shell.open();
+        while (!shell.isDisposed()) {
+            if (!display.readAndDispatch()) {
+                display.sleep();
+            }
+        }
+        display.dispose();
     }
 }
